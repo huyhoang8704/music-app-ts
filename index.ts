@@ -15,6 +15,8 @@ app.set('view engine', 'pug');
 dotenv.config();
 // Connect DB
 database.connect();
+// File tĩnh
+app.use(express.static('public'));
 
 
 clientRoutes(app);
