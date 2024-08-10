@@ -3,11 +3,12 @@ import express , { Express , Request , Response } from "express";
 const app : Express  = express()
 const port : number | string = process.env.PORT || 3000;
 
-
+app.set('views','./views');
+app.set('view engine', 'pug');
 
 
 app.get('/topics',(req : Request, res : Response) => {
-    res.send('Chủ đề bài hát')
+    res.render("client/pages/topics/index.pug",)
 })
 
 
