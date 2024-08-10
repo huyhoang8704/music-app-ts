@@ -6,8 +6,8 @@ const port : number | string = process.env.PORT || 3000;
 
 
 
-app.get('/',(req : Request, res : Response) => {
-    res.send('Trang chủ')
+app.get('/topics',(req : Request, res : Response) => {
+    res.send('Chủ đề bài hát')
 })
 
 
