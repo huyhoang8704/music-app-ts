@@ -2,6 +2,7 @@ import { Express, Request, Response , Router } from "express"
 import Topic from "../../model/topic.model";
 import Song from "../../model/song.controller";
 import Singer from "../../model/singer.model";
+import FavoriteSong from "../../model/favorite-song.model";
 
 
 const list = async (req : Request, res : Response) => {
@@ -52,6 +53,10 @@ const detail = async (req : Request, res : Response) => {
         deleted : false
     }).select("title")
 
+    const favoriteSong = await FavoriteSong.findOne({
+        songId : song.id,
+    })
+    song["favorite"] = favoriteSong ? true : false
 
     res.render("client/pages/songs/detail.pug", {
         pageTitle : song.title,
@@ -85,10 +90,43 @@ const like = async (req, res : Response) => {
     })
 
 }
+const favorite = async (req, res : Response) => {
+    const idSong : string = req.params.idSong
+    const typefavorite : string = req.params.typefavorite
+
+    switch (typefavorite) {
+        case "favorite":
+            const exist = await FavoriteSong.findOne({
+                songId : idSong
+            })
+            if(!exist) {
+                const record = new FavoriteSong({
+                    // userId : "", // Làm tính năng đăng nhập thì thêm userId
+                    songId : idSong
+                })
+                await record.save();
+            }
+            break;
+        case "unfavorite":
+            await FavoriteSong.deleteOne({
+                songId : idSong
+            })
+            break;
+    
+        default:
+            break;
+    }
+    res.json({
+        code : 200, 
+        message : "Success!"
+    })
+
+}
 
 
 export = {
     list,
     detail,
     like,
+    favorite,
 }
