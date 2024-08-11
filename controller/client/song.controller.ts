@@ -32,7 +32,38 @@ const list = async (req : Request, res : Response) => {
         songs : songs
     })
 }
+const detail = async (req : Request, res : Response) => {
+    const slug = req.params.slugSong
+    const song = await Song.findOne({
+        slug : slug,
+        status : "active",
+        deleted : false
+    })
+    const singerId = song.singerId
+    const singer = await Singer.findOne({
+        _id : singerId,
+        status : "active",
+        deleted : false
+    }).select("fullName avatar")
+    const topicId = song.topicId
+    const topic = await Topic.findOne({
+        _id : topicId,
+        status : "active",
+        deleted : false
+    }).select("title")
+
+
+    res.render("client/pages/songs/detail.pug", {
+        pageTitle : song.title,
+        song : song,
+        singer : singer,
+        topic : topic,
+    })
+}
+
+
 
 export = {
     list,
+    detail,
 }
