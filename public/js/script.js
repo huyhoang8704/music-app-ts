@@ -57,8 +57,8 @@ if(buttonLike) {
       .then(res => res.json())
       .then(data => {
         if(data.code == 200) {
-          const elementNumber = buttonLike.querySelector(".inner-number");
-          elementNumber.innerHTML = data.like;
+          const span = buttonLike.querySelector("span");
+          span.innerHTML = `${data.newLike} Like`;
           buttonLike.classList.toggle("active");
         }
       })
