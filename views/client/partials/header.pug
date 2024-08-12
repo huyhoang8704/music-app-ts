@@ -8,10 +8,31 @@ header.header
                     a(href="/")
                         img(src="/images/bk.jpg", alt="logo")
 
+            .col-5 
+                .box-search 
+                    form(
+                        action = "/search/result"
+                        method = "GET"
+                    )
+                        div(class = "form-group d-flex mb-0")
+                            input(
+                                type = "text",
+                                placeholder= "Tìm kiếm..."
+                                class = "form-control"
+                                name = "keyword"
+                                value = keyword
+                            )
+                            button(
+                                type = "submit",
+                                class = "btn btn-primary"
+                            )
+                                i(class = "fa-solid fa-magnifying-glass")
+                            
 
-            .col-9 
+
+            .col-4 
                 .inner-menu 
-                    ul 
+                    ul(class ="ml-auto") 
                         li 
                             a(href="/") <i class = "fa-solid fa-house"></i> Trang chủ
                         li 
