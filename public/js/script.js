@@ -128,4 +128,5 @@ if(boxSearch) {
       })
   });
 }
+
 // End Search Suggest

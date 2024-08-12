@@ -4,7 +4,7 @@ const router : Router = Router()
 
 
 
-router.get('/result', controller.result);
+router.get('/:type', controller.result);
 
 
 

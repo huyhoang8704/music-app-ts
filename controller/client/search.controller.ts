@@ -5,6 +5,7 @@ import { convertToSlug } from "../../helpers/convertToSlug"
 
 
 const result = async (req : Request, res : Response) => {
+    const type = req.params.type
     const keyword: string = `${req.query.keyword}`;
 
 
@@ -31,17 +32,35 @@ const result = async (req : Request, res : Response) => {
                 deleted: false,
                 status: "active",
             })
-            item["singer"] = singer
-            listSongs.push(item);
+            // item["singer"] = singer
+
+            // listSongs.push(item);
+            listSongs.push({
+                id: item.id,
+                avatar: item.avatar,
+                title: item.title,
+                like: item.like,
+                slug: item.slug,
+                singer: {
+                  fullName: singer.fullName
+                },
+              });
         }
     }
 
 
-    res.render("client/pages/search/result.pug", {
-        pageTitle: `Kết quả: ${keyword}`,
-        keyword: keyword,
-        songs : listSongs,
-    })
+    if(type == "result") {
+        res.render("client/pages/search/result.pug", {
+            pageTitle: `Kết quả: ${keyword}`,
+            keyword: keyword,
+            songs : listSongs,
+        })
+    }  else if (type == "suggest") {
+        res.json({
+            code : 200,
+            songs : listSongs
+        })
+    }
 }
 
 export = {
