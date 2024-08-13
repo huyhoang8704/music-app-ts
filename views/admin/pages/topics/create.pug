@@ -1,0 +1,73 @@
+extends ../../layouts/default.pug  
+include ../../mixins/alert.pug
+ 
+
+block main
+    h1(class = "mb-4") Thêm chủ đề bài hát mới
+    +alert-error(3000)
+    +alert-success(3000)
+    form(
+        action = `/${prefixAdmin}/topics/create`
+        method = "POST"
+    )
+        div(class = "form-group")
+            label(for = "title") Tiêu đề
+            input(
+                type = "text"
+                class = "form-control"
+                id = "title"
+                name = "title"
+                required
+            )    
+        div(class = "form-group")
+            label(for = "desc") Mô tả
+            textarea(
+                name="description"
+                class = "form-control"
+                rows = "5"
+                id = "desc"
+            )
+
+        div(
+            class = "form-group"
+            upload-image
+        )
+            label(for = "avatar") Ảnh 
+            input(
+                type = "text"
+                class = "form-control"
+                id = "avatar"
+                name = "avatar"
+                upload-image-input
+            )
+            img(src="", alt="" upload-image-preview)
+        div(class ="form-group form-check form-check-inline")
+            input(
+                type = "radio"
+                class = "form-check-input"
+                id= "statusActive"
+                name = "status"
+                value = "active"
+                checked
+            )
+            label(for = "statusActive" class ="form-check-label") Hoạt động
+        
+        div(class ="form-group form-check form-check-inline")
+            input(
+                type = "radio"
+                class = "form-check-input"
+                id= "statusInactive"
+                name = "status"
+                value = "inactive"
+            )
+            label(for = "statusInactive" class ="form-check-label") Dừng hoạt động
+        
+        div(class = "form-group")
+            button(
+                type = "submit"
+                class = "btn btn-primary"
+            ) Tạo mới
+
+    script(src="/admin/js/script.js") 
+
+

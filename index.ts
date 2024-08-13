@@ -1,6 +1,10 @@
 import express , { Express , Request , Response } from "express";
 import dotenv from 'dotenv';
 import path from "path";
+import bodyParser from "body-parser";
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import flash from 'flash';
 import * as database from './config/database';
 
 
@@ -20,6 +24,12 @@ dotenv.config();
 database.connect();
 // File tĩnh
 app.use(express.static('public'));
+// bodyParse req.body
+app.use(bodyParser.urlencoded({ extended: false }))
+// express-flash  // thông báo
+app.use(cookieParser('keyboard cat'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash())
 
 // TinyMCE
 app.use(
