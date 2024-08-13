@@ -35,8 +35,8 @@ if(aplayer) {
       .then(res => res.json())
       .then(data => {
         if(data.code == 200) {
-          const innerListen = document.querySelector(".singer-detail .inner-actions .inner-listen .inner-number");
-          innerListen.innerHTML = data.listen;
+          const innerListen = document.querySelector(".singer-detail .inner-actions .inner-listen .inner-number span");
+          innerListen.innerHTML = `${data.listen} lượt nghe`;
         }
       })
   });

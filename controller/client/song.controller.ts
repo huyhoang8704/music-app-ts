@@ -122,11 +122,35 @@ const favorite = async (req, res : Response) => {
     })
 
 }
+const listen = async (req, res : Response) => {
+    const idSong : string = req.params.idSong
+    const song = await Song.findOne({
+        _id : idSong,
+        status : "active",
+        deleted : false
+    })
+    const newListen = song.listen + 1;
 
+    await Song.updateOne({
+        _id : idSong
+    }, {
+        $set : {
+            listen : newListen
+        }
+    })
+    // console.log(newListen);
+    res.json({
+        code : 200,
+        message : "Success!",
+        newListen : newListen
+    })
+
+}
 
 export = {
     list,
     detail,
     like,
     favorite,
+    listen,
 }
