@@ -2,7 +2,7 @@ import { Express, Request, Response , Router } from "express"
 import Song from "../../model/song.controller"
 import Topic from "../../model/topic.model"
 import Singer from "../../model/singer.model"
-
+import { systemConfig } from "../../config/system";
 
 const index = async (req : Request, res : Response) => {
     const songs = await Song.find({ deleted : false })
@@ -21,8 +21,25 @@ const create = async (req : Request, res : Response) => {
         singers : singers,
     })
 }
+const createPOST = async (req : Request, res : Response) => {
+    if(req.body.avatar) {
+        req.body.avatar = req.body.avatar[0];
+    }
+
+    if(req.body.audio) {
+        req.body.audio = req.body.audio[0];
+    }
+
+    const song = new Song(req.body);
+    // await song.save();
+    console.log(song)
+
+    res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+}
+
 
 export = {
     index,
     create,
+    createPOST,
 }
